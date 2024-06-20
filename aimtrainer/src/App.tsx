@@ -9,8 +9,9 @@ function App() {
   const [remainingSeconds, SetTime] = useState(time);
   const [timerStarted, SetTimerStarted] = useState(false);
   const [NameInput, SetNameInput] = useState("");
+
   useEffect(() => {
-    let timer: number;
+    let timer: NodeJS.Timeout;
     if (timerStarted && remainingSeconds > 0) {
       timer = setInterval(() => {
         SetTime((prev) => prev - 1);
@@ -29,25 +30,23 @@ function App() {
 
   return (
     <div>
-      {NameInput == "" ? (
+      {NameInput === "" ? (
         <div>
           <NameComponent SetName={SetNameInput} />
         </div>
       ) : (
         <div>
-          <div className="flex flex-row justify-between px-48  bg-black text-white py-4 text-lg">
-            <div>Score : {count}</div>
-            <div>Name : {NameInput}</div>
-            <div>Time : {remainingSeconds}</div>
+          <div className="flex flex-row justify-between px-48 bg-black text-white py-4 text-lg">
+            <div>Score: {count}</div>
+            <div>Name: {NameInput}</div>
+            <div>Time: {remainingSeconds}</div>
           </div>
           {remainingSeconds > 0 ? (
             !timerStarted ? (
               <div className="flex justify-center items-center mt-48">
                 <button
                   className="flex items-center justify-center bg-green-800 px-10 text-white py-2 rounded-md"
-                  onClick={() => {
-                    startTimer();
-                  }}
+                  onClick={startTimer}
                 >
                   Start
                 </button>
@@ -69,7 +68,7 @@ function App() {
                 onClick={() => {
                   SetTime(time);
                   SetCount(0);
-                  startTimer();
+                  SetTimerStarted(false); // Ensure timer starts fresh
                 }}
               >
                 Restart

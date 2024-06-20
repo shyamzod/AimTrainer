@@ -1,10 +1,21 @@
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 
-export default function NameComponent({ SetName }) {
+interface NameComponentProps {
+  SetName: (name: string) => void;
+}
+
+export default function NameComponent({ SetName }: NameComponentProps) {
   const [input, SetInput] = useState("");
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-black">
-      <form className="flex flex-col justify-center items-center space-y-2 bg-gray-800 py-10 w-auto text-white px-10 rounded-lg">
+      <form
+        className="flex flex-col justify-center items-center space-y-2 bg-gray-800 py-10 w-auto text-white px-10 rounded-lg"
+        onSubmit={(e: FormEvent) => {
+          e.preventDefault();
+          SetName(input);
+        }}
+      >
         <div className="flex space-x-4">
           <label className="mt-1">Name</label>
           <input
@@ -13,7 +24,7 @@ export default function NameComponent({ SetName }) {
             type="text"
             placeholder="Enter your Name"
             required
-            onChange={(e) => {
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
               SetInput(e.target.value);
             }}
           />
@@ -21,10 +32,6 @@ export default function NameComponent({ SetName }) {
         <button
           type="submit"
           className="bg-green-800 px-2 text-white py-1 rounded-md"
-          onClick={(e) => {
-            e.preventDefault();
-            SetName(input);
-          }}
         >
           Done
         </button>
