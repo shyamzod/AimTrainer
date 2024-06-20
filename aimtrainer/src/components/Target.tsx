@@ -6,8 +6,8 @@ export default function Target({ IncreaseCount, CurrentCount, Start }) {
   const [timerStarted, SetTimerStarted] = useState(false);
 
   function RefreshTarget() {
-    SetXPos(Math.floor(Math.random() * 700 + 10));
-    SetYPos(Math.floor(Math.random() * 1400 + 10));
+    SetXPos(Math.floor(Math.random() * 650 + 50));
+    SetYPos(Math.floor(Math.random() * 1300 + 50));
     if (!timerStarted) {
       Start();
       SetTimerStarted(true);
