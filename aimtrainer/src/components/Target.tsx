@@ -1,8 +1,18 @@
 import { useState } from "react";
 
-export default function Target({ IncreaseCount, CurrentCount, Start }) {
+interface TargetProps {
+  IncreaseCount: (count: number) => void;
+  CurrentCount: number;
+  Start: () => void;
+}
+
+export default function Target({
+  IncreaseCount,
+  CurrentCount,
+  Start,
+}: TargetProps) {
   const [xPos, SetXPos] = useState(400);
-  const [YPos, SetYPos] = useState(700);
+  const [yPos, SetYPos] = useState(700);
   const [timerStarted, SetTimerStarted] = useState(false);
 
   function RefreshTarget() {
@@ -14,13 +24,14 @@ export default function Target({ IncreaseCount, CurrentCount, Start }) {
     }
     IncreaseCount(CurrentCount + 1);
   }
+
   return (
     <div
       className="w-10 h-10 rounded-full"
       style={{
         position: "absolute",
         top: `${xPos}px`,
-        left: `${YPos}px`,
+        left: `${yPos}px`,
         background:
           "radial-gradient(circle, rgba(255,0,0,1) 0%, rgba(139,0,0,1) 100%)",
         boxShadow: "inset 0 0 10px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.5)",
