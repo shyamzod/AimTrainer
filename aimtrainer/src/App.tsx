@@ -10,7 +10,7 @@ function App() {
   const [timerStarted, SetTimerStarted] = useState(false);
   const [NameInput, SetNameInput] = useState("");
   useEffect(() => {
-    let timer;
+    let timer: number;
     if (timerStarted && remainingSeconds > 0) {
       timer = setInterval(() => {
         SetTime((prev) => prev - 1);
