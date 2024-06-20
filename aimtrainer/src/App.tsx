@@ -11,15 +11,18 @@ function App() {
   const [NameInput, SetNameInput] = useState("");
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: NodeJS.Timeout | undefined;
     if (timerStarted && remainingSeconds > 0) {
       timer = setInterval(() => {
         SetTime((prev) => prev - 1);
       }, 1000);
     } else if (remainingSeconds === 0) {
-      clearInterval(timer);
+      if (timer) clearInterval(timer);
     }
-    return () => clearInterval(timer); // Cleanup interval on component unmount
+
+    return () => {
+      if (timer) clearInterval(timer); // Cleanup interval on component unmount
+    };
   }, [timerStarted, remainingSeconds]);
 
   const startTimer = () => {
