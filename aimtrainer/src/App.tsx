@@ -4,12 +4,13 @@ import Target from "./components/Target";
 import NameComponent from "./components/NameComponent";
 import { useRecoilValue } from "recoil";
 import { timeLimit } from "./store/atoms/mainState";
+import ConfigComponent from "./components/ConfigComponent";
 function App() {
-  const time = useRecoilValue(timeLimit);
   const [count, SetCount] = useState(0);
-  const [remainingSeconds, SetTime] = useState(time);
+  const [remainingSeconds, SetTime] = useState(useRecoilValue(timeLimit));
   const [timerStarted, SetTimerStarted] = useState(false);
   const [NameInput, SetNameInput] = useState("");
+  const [settingsHide, SetSettingsHide] = useState(true);
 
   useEffect(() => {
     let timer: NodeJS.Timeout | undefined;
@@ -43,9 +44,23 @@ function App() {
           <div className="flex flex-row justify-between px-48 bg-black text-white py-4 text-lg">
             <div>Score: {count}</div>
             <div>Name: {NameInput}</div>
-            <div>Time: {remainingSeconds}</div>
+            <div className="flex flex-row space-x-10">
+              <div>Time: {remainingSeconds}</div>
+              <div>
+                <button
+                  className="flex items-center justify-center bg-yellow-800 px-5 text-white rounded-md"
+                  onClick={() => {
+                    SetSettingsHide(!settingsHide);
+                  }}
+                >
+                  Settings
+                </button>
+              </div>
+            </div>
           </div>
-          {remainingSeconds > 0 ? (
+          {!settingsHide ? (
+            <ConfigComponent />
+          ) : remainingSeconds > 0 ? (
             !timerStarted ? (
               <div className="flex justify-center items-center mt-48">
                 <button
@@ -70,7 +85,7 @@ function App() {
               <button
                 className="bg-red-800 px-2 text-white py-1 rounded-md"
                 onClick={() => {
-                  SetTime(time);
+                  SetTime(remainingSeconds);
                   SetCount(0);
                   SetTimerStarted(false); // Ensure timer starts fresh
                 }}
