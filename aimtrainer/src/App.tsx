@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import Target from "./components/Target";
 import NameComponent from "./components/NameComponent";
-
+import { useRecoilValue } from "recoil";
+import { timeLimit } from "./store/atoms/mainState";
 function App() {
-  const time = 5;
+  const time = useRecoilValue(timeLimit);
   const [count, SetCount] = useState(0);
   const [remainingSeconds, SetTime] = useState(time);
   const [timerStarted, SetTimerStarted] = useState(false);
